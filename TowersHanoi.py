@@ -1,4 +1,3 @@
-from node import Node
 from stack import Stack
 
 
@@ -87,7 +86,6 @@ def play_as_computer(num_, from_, to_):
 
     else:
         transit_loc = determine_transit_loc(from_, to_)
-        #print(num_, transit_loc)
 
         play_as_computer(num_ - 1, from_, transit_loc)
         play_as_computer(1, from_, to_)
@@ -100,7 +98,8 @@ def finish_game():
         print("\nCONGRATULATIONS!")
     print("\nYou completed the game in {0} moves, and the optimal number of moves is {1}.".
           format(num_user_moves, num_optimal_moves))
-    print("Here is the sequence of moves: ", record)
+    if num_user_moves < 50:
+        print("Here is the sequence of moves: ", record)
 
 
 if __name__ == '__main__':
@@ -116,7 +115,7 @@ if __name__ == '__main__':
     stack_board = create_board()
     choices = create_choices()
     # chose number of disks, place disks in left stack:
-    initialize_disks(2)
+    initialize_disks()
 
     player = ""
     while player not in ["H", "C"]:
@@ -151,6 +150,3 @@ if __name__ == '__main__':
             play_as_computer(num_disks, "L", "R")
 
     finish_game()
-
-
-
