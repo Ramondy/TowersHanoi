@@ -50,33 +50,60 @@ if __name__ == '__main__':
 
     print("\nLet's play Towers of Hanoi!!")
 
-    #create the stack_board as list of 3 Stacks, chose number of disks, place disks in left stack:
+    # create the stack_board as list of 3 Stacks
     stack_board = create_board()
-    initialize_disks()
-
     choices = create_choices()
+    # chose number of disks, place disks in left stack:
+    initialize_disks()
+    num_on_goal = stack_board[-1].get_size()
 
-    #PLAY THE GAME
-    while stack_board[-1].get_size() != num_disks:
-        print("\n...Current Stacks...")
-        for stack in stack_board:
-            stack.print_items()
+    player = ""
+    while player not in ["h", "c"]:
+        player = input("\nWho is playing? Human (h) or Computer (c) ?")
 
-        while True:
-            print("\nWhich stack do you want to move from?\n")
-            from_stack = get_user_input()
-            print("\nWhich stack do you want to move to?\n")
-            to_stack = get_user_input()
-            if from_stack.is_empty() or not to_stack.has_space() or from_stack.peek() > to_stack.peek():
-                print("\nInvalid Move. Try Again")
-                continue
-            else:
-                disk = from_stack.pop()
-                to_stack.push(disk)
-                num_user_moves += 1
-                break
+    if player == "h":
 
-    if num_user_moves == num_optimal_moves:
-        print("\nCONGRATULATIONS!")
-    print("\nYou completed the game in {0} moves, and the optimal number of moves is {1}.".
-          format(num_user_moves, num_optimal_moves))
+        #PLAY THE GAME
+        while num_on_goal != num_disks:
+            print("\n...Current Stacks...")
+            for stack in stack_board:
+                stack.print_items()
+
+            while True:
+                print("\nWhich stack do you want to move from?\n")
+                from_stack = get_user_input()
+                print("\nWhich stack do you want to move to?\n")
+                to_stack = get_user_input()
+                if from_stack.is_empty() or not to_stack.has_space() or from_stack.peek() > to_stack.peek():
+                    print("\nInvalid Move. Try Again")
+                    continue
+                else:
+                    disk = from_stack.pop()
+                    to_stack.push(disk)
+                    num_user_moves += 1
+                    break
+
+        if num_user_moves == num_optimal_moves:
+            print("\nCONGRATULATIONS!")
+        print("\nYou completed the game in {0} moves, and the optimal number of moves is {1}.".
+              format(num_user_moves, num_optimal_moves))
+
+    if player == "c":
+
+        play_as_computer()
+
+
+        pass
+
+def play_as_computer():
+
+    global stack_board
+    global num_disks
+    global num_on_goal
+
+    even_play = (num_disks % 2 == 0)
+    num_at_play = 1 - num_on_goal
+
+    while num_on_goal != num_disks:
+        if even_play:
+        else:
