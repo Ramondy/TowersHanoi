@@ -31,7 +31,7 @@ def initialize_disks(min_disks=3):
 
 def get_user_input():
     global stack_board
-    choices = create_choices()
+    global choices
     while True:
         for i in range(len(choices)):
             print("Enter {0} for {1}".format(choices[i], stack_board[i].get_name()))
@@ -54,21 +54,29 @@ if __name__ == '__main__':
     stack_board = create_board()
     initialize_disks()
 
+    choices = create_choices()
+
     #PLAY THE GAME
     while stack_board[-1].get_size() != num_disks:
-        print("\n\n\n...Current Stacks...")
+        print("\n...Current Stacks...")
         for stack in stack_board:
             stack.print_items()
-            #stack.peek()
-        break
 
+        while True:
+            print("\nWhich stack do you want to move from?\n")
+            from_stack = get_user_input()
+            print("\nWhich stack do you want to move to?\n")
+            to_stack = get_user_input()
+            if from_stack.is_empty() or not to_stack.has_space() or from_stack.peek() > to_stack.peek():
+                print("\nInvalid Move. Try Again")
+                continue
+            else:
+                disk = from_stack.pop()
+                to_stack.push(disk)
+                num_user_moves += 1
+                break
 
-
-
-
-
-    #get_user_input()
-    #print(stack_board[0].peek())
-
-    #print(middle_stack.peek())
-
+    if num_user_moves == num_optimal_moves:
+        print("\nCONGRATULATIONS!")
+    print("\nYou completed the game in {0} moves, and the optimal number of moves is {1}.".
+          format(num_user_moves, num_optimal_moves))

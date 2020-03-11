@@ -32,7 +32,9 @@ class Stack:
     def peek(self):
         if self.size > 0:
             return self.top_item.get_value()
-        print("This stack is empty.")
+        else:
+            #print("This stack is empty.")
+            return self.limit + 1
 
     def has_space(self):
         return self.limit > self.size
